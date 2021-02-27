@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#FFDC3D</color>
+    <color name="yellowColor">#FFDC3D</color>
+    <color name="secondaryTextcolor">#878787</color>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="default_textColor">#424242</color>
+    <color name="default_textColorWhite">@color/white</color>
+    <color name="default_editTextHint">#656565</color>
+    <color name="default_cardBackgroundColor">@color/white</color>
+    <color name="colorControlHighlight">@color/white</color>
+    <color name="iconTint">@color/white</color>
+    <color name="title_blue">#0099ff</color>
+
+    <color name="textColor_price">#388E3C</color>
+    <color name="textColor_price_discount">#656565</color>
+    <color name="bg_price_discount">#ef394e</color>
+    <color name="favorite_heart">#E6495A</color>
+
+    <color name="bg_toast_success">#388E3C</color>
+    <color name="bg_toast_error">#D32F2F</color>
+    <color name="ripple_gray">#eeeeee</color>
+    <color name="back_gray">#e8e8e8</color>
+    <color name="white_pure_30">#4dffffff</color>
+
+    <color name="toolbarBackgroundColor">#eeeeee</color>
+    <color name="toolbarIconTint">@color/gray_dark</color>
+    <color name="toolbarTextColor">@color/gray_dark</color>
+
+    <color name="nice_green">#66BB6A</color>
+    <color name="nice_green_dark">#388E3C</color>
+
+    <color name="bottom_navigation_selected">#F06292</color>
+    <color name="bottom_navigation_unselected">#979797</color>
+
+    <color name="gray_dark">#6e6e6e</color>
+    <color name="gray">#A9A9A9</color>
+    <color name="gray_light">#CDCDCD</color>
+    <color name="title_textColor">#636363</color> <!-- 61747E -->
+
+    <color name="profile_title_textColor">#1565C0</color>
+
+    <color name="cartBasket_enable_indicator">#0099ff</color>
+    <color name="cartBasket_disable_indicator">#AAAAAA</color>
+    <color name="ripple_yellow">#FFEA00</color>
+    <color name="bottom_sheet_extended_fab_day">#2196F3</color>
+    <color name="bottom_sheet_extended_fab_hour">#F44336</color>
+
+    <color name="alertDialog_default_barColor">#FFEA00</color>
+    <color name="alertDialog_titleTextColor">#131313</color>
+    <color name="alertDialog_bodyTextColor">#000000</color>
+    <color name="alertDialog_positiveTextColor">#2E7D32</color>
+    <color name="alertDialog_negativeTextColor">#C62828</color>
+    <color name="alertDialog_titleIconTint">#A9A9A9</color>
+    <color name="alertDialog_positiveBackgroundColor">#388E3C</color>
+    <color name="alertDialog_negativeBackgroundColor">#E6495A</color>
+    <color name="fab_backgroundTint">#40C4FF</color>
+</resources>

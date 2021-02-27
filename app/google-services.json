@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "322725972756",
+    "firebase_url": "https://daroopeyk-41d5e.firebaseio.com",
+    "project_id": "daroopeyk-41d5e",
+    "storage_bucket": "daroopeyk-41d5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322725972756:android:5d06da02ca7fb376291001",
+        "android_client_info": {
+          "package_name": "ir.rosependar.snappdaroo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322725972756-p0o57v4auckfurjegg5972l32k45inti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhwdJCEqqUq8L21KFVkLnUPjzqsIZrQNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322725972756-p0o57v4auckfurjegg5972l32k45inti.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

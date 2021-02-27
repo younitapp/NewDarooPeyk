@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/bg_border_order_history"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="8dp"
+    android:id="@+id/lyt_main"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:fontFamily="@font/iran_sans"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:id="@+id/order_history_createdAt"
+            android:textSize="10dp"
+            android:textColor="@color/black"
+            tools:text="1398/6/15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/order_history_orderNumber"
+            android:fontFamily="@font/iran_sans"
+            android:textColor="@color/black"
+            android:textSize="10dp"
+            tools:text="شماره فاکتور: 12345789"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:background="@drawable/dash_line_order_history"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:textColor="@color/title_blue"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/order_history_productName"
+        android:layout_gravity="end"
+        android:fontFamily="@font/iran_sans_bold"
+        android:textSize="12dp"
+        android:lineSpacingExtra="4dp"
+        tools:text="متن محصول"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+
+    <RelativeLayout
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/order_history_quantity"
+            android:layout_marginStart="8dp"
+            tools:text="تعداد: 5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            />
+
+        <LinearLayout
+            android:layout_alignParentEnd="true"
+
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|right">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_marginEnd="8dp"
+                android:id="@+id/order_history_status"
+                android:fontFamily="@font/iran_sans"
+
+                android:textColor="@color/nice_green"
+                android:textSize="10dp"
+                tools:text="وضعیت: در حال بررسی"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:background="@drawable/bg_status_order_history"
+                android:layout_width="12dp"
+                android:id="@+id/img_status"
+                android:layout_height="12dp"
+                />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

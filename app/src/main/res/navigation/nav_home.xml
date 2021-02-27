@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_home"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ir.rosependar.snappdaroo.ui.home.HomeFragment"
+        android:label="home_fragment"
+        tools:layout="@layout/home_fragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_submitOrderFragment"
+            app:destination="@id/submitOrderFragment"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_down_exit"
+            app:popEnterAnim="@anim/animate_slide_up_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit" />
+        <action
+            android:id="@+id/action_homeFragment_to_orderDetailFragment3"
+            app:destination="@id/orderDetailFragment3"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_down_exit"
+            app:popEnterAnim="@anim/animate_windmill_enter"
+            app:popExitAnim="@anim/animate_windmill_exit" />
+        <action
+            android:id="@+id/action_homeFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment"
+            app:enterAnim="@anim/animate_slide_up_enter"
+            app:exitAnim="@anim/animate_slide_down_exit"
+            app:popEnterAnim="@anim/animate_slide_up_enter"
+            app:popExitAnim="@anim/animate_slide_down_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/submitOrderFragment"
+        android:name="ir.rosependar.snappdaroo.ui.submit.SubmitOrderFragment"
+        android:label="SubmitOrderFragment" />
+    <fragment
+        android:id="@+id/orderDetailFragment3"
+        android:name="ir.rosependar.snappdaroo.ui.orders.orderdetail.OrderDetailFragment"
+        android:label="order_detail_fragment"
+        tools:layout="@layout/order_detail_fragment" >
+        <action
+            android:id="@+id/action_orderDetailFragment3_to_checkOutFragment2"
+            app:destination="@id/checkOutFragment2"
+            app:enterAnim="@anim/animate_fade_enter"
+            app:exitAnim="@anim/animate_in_out_exit"
+            app:popEnterAnim="@anim/animate_in_out_enter"/>
+    </fragment>
+    <fragment
+        android:id="@+id/checkOutFragment2"
+        android:name="ir.rosependar.snappdaroo.ui.checkout.CheckOutFragment"
+        android:label="CheckOutFragment" />
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="ir.rosependar.snappdaroo.ui.webview.WebViewFragment"
+        android:label="web_view_fragment"
+        tools:layout="@layout/web_view_fragment" />
+</navigation>
