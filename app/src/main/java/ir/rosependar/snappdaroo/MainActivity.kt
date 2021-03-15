@@ -85,9 +85,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun setMainBackground(image_url: String) {
-
-    }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
         super.onRestoreInstanceState(savedInstanceState)
@@ -101,7 +98,12 @@ class MainActivity : AppCompatActivity() {
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_nav)
 
         val navGraphIds =
-            listOf(R.navigation.nav_home, R.navigation.nav_profile, R.navigation.nav_orders)
+            listOf(
+                R.navigation.nav_home,
+                R.navigation.nav_profile,
+                R.navigation.nav_orders,
+                R.navigation.nav_contacts
+            )
 
         // Setup the bottom navigation view with a list of navigation graphs
         val controller = bottomNavigationView.setupWithNavController(

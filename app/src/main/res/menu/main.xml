@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_contacts"
+        android:icon="@drawable/ic_contacts"
+        android:iconTint="#fff"
+        android:title="مخاطبین" />
+
     <item
         android:id="@+id/nav_profile"
         android:icon="@drawable/ic_profile"
         android:iconTint="#fff"
         android:title="پروفایل" />
+
     <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home"
         android:iconTint="#fff"
         android:title="خانه" />
+
     <item
         android:id="@+id/nav_orders"
         android:icon="@drawable/ic_order"
