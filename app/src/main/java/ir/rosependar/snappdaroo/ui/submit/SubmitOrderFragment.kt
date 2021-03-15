@@ -261,10 +261,6 @@ class SubmitOrderFragment : Fragment() {
         GlobalScope.launch {
 
 
-
-
-
-
             if (filePath.isEmpty()) {
 
 
@@ -329,7 +325,8 @@ class SubmitOrderFragment : Fragment() {
 
                         })
             } else {
-                val compressedFile = Constants.compressImage(requireContext(), File(fileUri!!.path!!))
+                val compressedFile =
+                    Constants.compressImage(requireContext(), File(fileUri!!.path!!))
                 MultipartUploadRequest(
                     requireContext(),
                     serverUrl = Constants.BASE_URL + "rpsapi_order"
@@ -389,7 +386,6 @@ class SubmitOrderFragment : Fragment() {
                                 uploadInfo: UploadInfo,
                                 serverResponse: ServerResponse
                             ) {
-
 
 
                                 loadingDialog.dismiss()

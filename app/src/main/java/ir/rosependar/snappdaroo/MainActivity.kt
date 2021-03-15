@@ -20,13 +20,18 @@ import ir.rosependar.snappdaroo.utils.Constants
 import ir.rosependar.snappdaroo.utils.Prefs
 import ir.rosependar.snappdaroo.utils.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by viewModel()
     private var currentNavController: LiveData<NavController>? = null
     var paidOrderId = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         if (Prefs.getInstance()!!.getToken().isEmpty()) {
             Intent(this, LoginActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

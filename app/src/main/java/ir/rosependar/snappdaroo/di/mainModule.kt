@@ -1,5 +1,6 @@
 package ir.rosependar.snappdaroo.di
 
+import ir.rosependar.snappdaroo.MainViewModel
 import ir.rosependar.snappdaroo.network.ApiInterface
 import ir.rosependar.snappdaroo.repositories.DataRepository
 import ir.rosependar.snappdaroo.repositories.RoomRepository
@@ -30,6 +31,7 @@ val mainModule = module {
     }
     single { RoomRepository(get()) }
     single { DataRepository(apiInterface = get()) }
+    single { MainViewModel(get(), get()) }
     viewModel { LoginViewModel(get()) }
     viewModel { HomeViewModel(get(), get()) }
     viewModel { SplashViewModel(get(), get()) }
