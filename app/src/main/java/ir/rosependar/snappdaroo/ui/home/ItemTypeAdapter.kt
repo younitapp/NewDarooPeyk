@@ -46,17 +46,16 @@ class ItemTypeAdapter(
         }
         val mainActivity = activityRefrence as MainActivity
         l(type.icon.toString())
-        Glide.with(holder.ic_drug).load(FILE_URL+type.icon!!).into(holder.ic_drug)
+        Glide.with(holder.ic_drug).load(FILE_URL + type.icon).into(holder.ic_drug)
         holder.txt_type.text = type.name
 
         holder.crd_main.setOnClickListener {
             if (type.type == "prescription") {
                 listener.OnTypeClicked(type.code.toInt())
             }
-            if(type.type == "link"){
 
+            if (type.type == "link") {
                 listener.OnLinkClicked(type.code)
-
             }
         }
     }
@@ -65,5 +64,5 @@ class ItemTypeAdapter(
 
 interface ItemClickListener {
     fun OnTypeClicked(code: Int)
-    fun OnLinkClicked(link : String)
+    fun OnLinkClicked(link: String)
 }

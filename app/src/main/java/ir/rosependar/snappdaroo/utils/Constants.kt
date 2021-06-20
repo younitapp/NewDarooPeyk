@@ -27,10 +27,16 @@ class Constants {
         const val API_VERSION = 1
         suspend fun compressImage(context: Context, imageFile: File): File {
             return Compressor.compress(context, imageFile) {
-                default(width = 800,height = 400,quality = 20,format = Bitmap.CompressFormat.JPEG)
+                default(
+                    width = 800,
+                    height = 400,
+                    quality = 20,
+                    format = Bitmap.CompressFormat.JPEG
+                )
             }
         }
-        fun CantConnectSnackbar(activity : Activity , actionListener : Flashbar.OnActionTapListener){
+
+        fun CantConnectSnackbar(activity: Activity, actionListener: Flashbar.OnActionTapListener) {
             Flashbar.Builder(activity)
                 .gravity(Flashbar.Gravity.BOTTOM)
                 .title("مشکل در اتصال به سرور")
@@ -40,21 +46,30 @@ class Constants {
                 .primaryActionTextColor(R.color.bg_price_discount)
                 .enterAnimation(
                     FlashAnim.with(activity)
-                    .animateBar()
-                    .duration(750)
-                    .alpha()
-                    .overshoot())
-                .exitAnimation(FlashAnim.with(activity)
-                    .animateBar()
-                    .duration(400)
-                    .accelerateDecelerate())
+                        .animateBar()
+                        .duration(750)
+                        .alpha()
+                        .overshoot()
+                )
+                .exitAnimation(
+                    FlashAnim.with(activity)
+                        .animateBar()
+                        .duration(400)
+                        .accelerateDecelerate()
+                )
                 .titleTypeface(Typeface.createFromAsset(activity.assets, "iran_sans_bold.ttf"))
                 .messageTypeface(Typeface.createFromAsset(activity.assets, "iran_sans.ttf"))
-                .primaryActionTextTypeface(Typeface.createFromAsset(activity.assets, "iran_sans_bold.ttf"))
+                .primaryActionTextTypeface(
+                    Typeface.createFromAsset(
+                        activity.assets,
+                        "iran_sans_bold.ttf"
+                    )
+                )
                 .primaryActionTapListener(actionListener)
                 .build()
                 .show()
         }
+
         fun getRealPathFromURI(mContext: Context, contentUri: Uri): String? {
             val proj =
                 arrayOf(MediaStore.Images.Media.DATA)

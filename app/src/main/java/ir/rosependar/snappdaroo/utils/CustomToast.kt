@@ -19,23 +19,26 @@ import java.lang.reflect.Field
 
 const val TAG: String = "SnappDaroo"
 var WIDTH = -1
+
 fun l(message: String) {
     Log.e(TAG, message)
 }
 
-fun successToast(msg : String) {
+fun successToast(msg: String) {
     customToast(msg, getColor(R.color.bg_toast_success))
 }
 
-fun errorToast(msg : String) {
+fun errorToast(msg: String) {
     customToast(msg, getColor(R.color.bg_toast_error))
 }
+
 fun getColor(@ColorRes resId: Int): Int {
     return if (Build.VERSION.SDK_INT >= 23)
         ContextCompat.getColor(MyApplication.instance!!, resId)
     else
         MyApplication.instance!!.resources.getColor(resId)
 }
+
 private fun customToast(msg: String, backgroundColor: Int) {
     val layout = LinearLayout(MyApplication.instance)
     layout.setBackgroundColor(backgroundColor)
@@ -66,12 +69,14 @@ private fun customToast(msg: String, backgroundColor: Int) {
     toast.duration = Toast.LENGTH_SHORT
     toast.show()
 }
+
 fun screenWidth(): Int {
     if (WIDTH == -1) {
         WIDTH = MyApplication.instance?.resources?.displayMetrics!!.widthPixels
     }
     return WIDTH
 }
+
 object FontsOverride {
 
     lateinit var font: Typeface

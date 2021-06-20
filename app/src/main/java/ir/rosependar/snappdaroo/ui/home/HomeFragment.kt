@@ -67,7 +67,8 @@ class HomeFragment : Fragment(), ItemClickListener {
         })
 
     }
-    private fun fetchData(){
+
+    private fun fetchData() {
         viewModel.sliderResponse.observe(requireActivity(), Observer {
             if (it?.body() != null) {
                 val sliders = mutableListOf<String>()
@@ -93,9 +94,11 @@ class HomeFragment : Fragment(), ItemClickListener {
                         if (slider.slide_link!!.contains("link=")) {
 
                             val url = slider.slide_link.removePrefix("link=")
-                            findNavController().navigate(R.id.action_homeFragment_to_webViewFragment,Bundle().apply {
-                                putString("url",url)
-                            })
+                            findNavController().navigate(
+                                R.id.action_homeFragment_to_webViewFragment,
+                                Bundle().apply {
+                                    putString("url", url)
+                                })
                         }
 
                     }
@@ -113,18 +116,20 @@ class HomeFragment : Fragment(), ItemClickListener {
                 rv_items.isNestedScrollingEnabled = false
                 lyt_background.visibility = View.VISIBLE
                 animationView.visibility = View.GONE
-            }
-            else{
-                Constants.CantConnectSnackbar(requireActivity(), object : Flashbar.OnActionTapListener {
-                    override fun onActionTapped(bar: Flashbar) {
-                        bar.dismiss()
-                        fetchData()
-                    }
+            } else {
+                Constants.CantConnectSnackbar(
+                    requireActivity(),
+                    object : Flashbar.OnActionTapListener {
+                        override fun onActionTapped(bar: Flashbar) {
+                            bar.dismiss()
+                            fetchData()
+                        }
 
-                })
+                    })
             }
         })
     }
+
     override fun OnTypeClicked(code: Int) {
         userProfileStatus = Prefs.getInstance()!!.getProfileStatus()
         if (userProfileStatus == 1) {
@@ -140,8 +145,8 @@ class HomeFragment : Fragment(), ItemClickListener {
     }
 
     override fun OnLinkClicked(link: String) {
-        findNavController().navigate(R.id.action_homeFragment_to_webViewFragment,Bundle().apply {
-            putString("url",link)
+        findNavController().navigate(R.id.action_homeFragment_to_webViewFragment, Bundle().apply {
+            putString("url", link)
         })
     }
 

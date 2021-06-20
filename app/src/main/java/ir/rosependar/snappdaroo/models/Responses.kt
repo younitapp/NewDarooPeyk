@@ -29,7 +29,6 @@ data class TokenModel(
 data class MainPageResponse(
 
     val status: Int,
-
     val message: String,
     val data: MainPage
 )
@@ -40,13 +39,16 @@ data class MainPage(
     val background: String
 )
 
-data class MenuItems(val name: String, val type: String, val code: String, val icon: String)
+data class MenuItems(
+    val name: String,
+    val type: String,
+    val code: String,
+    val icon: String
+)
+
 data class Slider(
-
     val slide_image: String?,
-
     val target_name: String?,
-
     val slide_link: String?
 )
 
@@ -68,17 +70,13 @@ data class Province(
 
 data class CityResponse(
     var status: Int,
-
     var message: String,
-
     var data: MutableList<City>
 )
 
 data class AreaResponse(
     var status: Int,
-
     var message: String,
-
     var data: MutableList<Area>
 )
 
@@ -128,11 +126,8 @@ data class AllProfileResponse(
 
 
 data class ProfileResponse(
-
     val status: Int,
-
     val message: String,
-
     val data: List<Profile?>?
 )
 
@@ -203,17 +198,13 @@ class DataConverter {
 
 data class OrderResponse(
     val status: Int,
-
     val message: String,
-
     val data: List<Prescription>?
 )
 
 data class getOrderResponse(
     val status: Int,
-
     val message: String,
-
     val data: OrderDetail?
 )
 
@@ -253,9 +244,7 @@ data class OrderImage(
 
 data class CheckOutResponse(
     val status: Int,
-
     val message: String,
-
     val data: CheckOut
 )
 
@@ -269,9 +258,7 @@ data class CheckOut(
 
 data class PaymentResponse(
     val status: Int,
-
     val message: String,
-
     val data: Payment
 )
 
