@@ -1,35 +1,35 @@
 package ir.rosependar.snappdaroo.ui.webview
 
+
 import android.Manifest
 import android.app.Activity
-import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.os.Parcelable
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.ValueCallback
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import ir.rosependar.snappdaroo.utils.l
-import kotlinx.android.synthetic.main.web_view_fragment.*
-
-
-import android.os.Environment
 import ir.rosependar.snappdaroo.R
+import ir.rosependar.snappdaroo.utils.errorToast
+import ir.rosependar.snappdaroo.utils.l
+import ir.rosependar.snappdaroo.utils.successToast
+import kotlinx.android.synthetic.main.web_view_fragment.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
-import java.io.IOException;
+import java.io.IOException
+
 
 class WebViewFragment : Fragment() {
 
@@ -38,8 +38,7 @@ class WebViewFragment : Fragment() {
     }
 
     private val url by lazy { arguments?.getString("url") }
-    private lateinit var viewModel: WebViewViewModel
-    private val REQUEST_PERMISSION_CODE = 111
+    private val viewModel: WebViewViewModel by viewModel()
 
     private val FILECHOOSER_RESULTCODE = 1
     private var mUploadMessage: ValueCallback<Uri?>? = null
@@ -48,6 +47,9 @@ class WebViewFragment : Fragment() {
     // the same for Android 5.0 methods only
     private var mFilePathCallback: ValueCallback<Array<Uri?>?>? = null
     private var mCameraPhotoPath: String? = null
+
+    private val MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 101
+    private var myRequest: PermissionRequest? = null
 
 
     override fun onCreateView(
@@ -59,20 +61,31 @@ class WebViewFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        btn_back.setOnClickListener {
-            findNavController().popBackStack()
-        }
+
+        clickOnTopBackBtn()
+
         try {
-            if (checkPermissionFromDevice()) setupWebView()
-            else requestPermission()
+            setupWebView()
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
+
+    private fun clickOnTopBackBtn() {
+        btn_back.setOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+
     private fun setupWebView() {
         webViewMain.settings.javaScriptEnabled = true
+        webViewMain.settings.javaScriptCanOpenWindowsAutomatically = true
+        webViewMain.settings.saveFormData = true
+        webViewMain.settings.setSupportZoom(false)
+        webViewMain.settings.pluginState = WebSettings.PluginState.ON
         webViewMain.visibility = View.INVISIBLE
+
         webViewMain.webViewClient = object : WebViewClient() {
             override fun onReceivedError(
                 view: WebView?,
@@ -100,7 +113,29 @@ class WebViewFragment : Fragment() {
             }
         }
 
+        setupWebChromeClient()
+        webViewMain.loadUrl(url)
+    }
+
+    private fun setupWebChromeClient() {
         webViewMain.webChromeClient = object : WebChromeClient() {
+
+            override fun onPermissionRequest(request: PermissionRequest?) {
+                myRequest = request
+
+                for (permission in request!!.resources) {
+                    when (permission) {
+                        "android.webkit.resource.AUDIO_CAPTURE" -> {
+                            askForPermission(
+                                request.origin.toString(),
+                                Manifest.permission.RECORD_AUDIO,
+                                MY_PERMISSIONS_REQUEST_RECORD_AUDIO
+                            )
+                        }
+                    }
+                }
+            }
+
             // for Lollipop, all in one
             override fun onShowFileChooser(
                 webView: WebView?, filePathCallback: ValueCallback<Array<Uri?>?>,
@@ -217,9 +252,6 @@ class WebViewFragment : Fragment() {
                 openFileChooser(uploadMsg, acceptType)
             }
         }
-
-        l("milUrl $url")
-        webViewMain.loadUrl(url)
     }
 
 
@@ -254,36 +286,41 @@ class WebViewFragment : Fragment() {
     }
 
 
-    private fun checkPermissionFromDevice(): Boolean {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
 
-        val writeExternalStorageResult = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        )
-
-        val readExternalStorageResult = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
-
-        val recordAudioResult =
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)
-
-        return writeExternalStorageResult == PackageManager.PERMISSION_GRANTED &&
-                recordAudioResult == PackageManager.PERMISSION_GRANTED &&
-                readExternalStorageResult == PackageManager.PERMISSION_GRANTED
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_RECORD_AUDIO -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted
+                    myRequest!!.grant(myRequest!!.resources)
+                    webViewMain.loadUrl(url)
+                } else {
+                    // permission denied
+                    errorToast("برای ارسال ویس باید مجوز دهید")
+                }
+            }
+        }
 
     }
 
-    private fun requestPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(), arrayOf(
-                Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ), REQUEST_PERMISSION_CODE
-        )
-        setupWebView()
+    fun askForPermission(origin: String, permission: String, requestCode: Int) {
+
+        if (ContextCompat.checkSelfPermission(requireContext(), permission)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(permission),
+                requestCode
+            )
+        } else {
+            myRequest!!.grant(myRequest!!.resources)
+        }
     }
+
 
 }

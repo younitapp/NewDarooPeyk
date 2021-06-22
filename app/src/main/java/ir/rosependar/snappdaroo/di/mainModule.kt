@@ -13,6 +13,8 @@ import ir.rosependar.snappdaroo.ui.orders.orderdetail.OrderDetailViewModel
 import ir.rosependar.snappdaroo.ui.profile.ProfileViewModel
 import ir.rosependar.snappdaroo.ui.splash.SplashViewModel
 import ir.rosependar.snappdaroo.ui.submit.SubmitOrderViewModel
+import ir.rosependar.snappdaroo.ui.webview.WebViewFragment
+import ir.rosependar.snappdaroo.ui.webview.WebViewViewModel
 import ir.rosependar.snappdaroo.utils.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -41,6 +43,7 @@ val mainModule = module {
     viewModel { CheckOutViewModel(get(), get()) }
     viewModel { (orderId: String) -> OrderDetailViewModel(get(), get(), orderId) }
     viewModel { ContactsViewModel(get(), get()) }
+    viewModel { WebViewViewModel() }
 
 }
 
