@@ -65,6 +65,10 @@ class WebViewFragment : Fragment() {
 
         clickOnTopBackBtn()
         onBackPressed()
+        askForPermission(
+            "", Manifest.permission.RECORD_AUDIO,
+            MY_PERMISSIONS_REQUEST_RECORD_AUDIO
+        )
 
         try {
             setupWebView()
@@ -73,12 +77,6 @@ class WebViewFragment : Fragment() {
         }
     }
 
-
-    private fun clickOnTopBackBtn() {
-        btn_back.setOnClickListener {
-            findNavController().popBackStack()
-        }
-    }
 
     private fun setupWebView() {
         webViewMain.settings.javaScriptEnabled = true
@@ -334,6 +332,13 @@ class WebViewFragment : Fragment() {
                 }
             }
         })
+    }
+
+
+    private fun clickOnTopBackBtn() {
+        btn_back.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
 
