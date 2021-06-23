@@ -17,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -63,6 +64,7 @@ class WebViewFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         clickOnTopBackBtn()
+        onBackPressed()
 
         try {
             setupWebView()
@@ -320,6 +322,18 @@ class WebViewFragment : Fragment() {
         } else {
             myRequest!!.grant(myRequest!!.resources)
         }
+    }
+
+    private fun onBackPressed() {
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (webViewMain.canGoBack()) {
+                    webViewMain.goBack()
+                } else {
+                    findNavController().navigateUp()
+                }
+            }
+        })
     }
 
 
