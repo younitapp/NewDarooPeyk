@@ -65,16 +65,29 @@ class WebViewFragment : Fragment() {
 
         clickOnTopBackBtn()
         onBackPressed()
-        askForPermission(
-            "", Manifest.permission.RECORD_AUDIO,
-            MY_PERMISSIONS_REQUEST_RECORD_AUDIO
-        )
+        if (!checkPermissionFromDevice()) requestPermission()
 
         try {
             setupWebView()
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    private fun checkPermissionFromDevice(): Boolean {
+        val recordAudioResult =
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)
+
+        return recordAudioResult == PackageManager.PERMISSION_GRANTED
+    }
+
+
+    private fun requestPermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(), arrayOf(
+                Manifest.permission.RECORD_AUDIO,
+            ), MY_PERMISSIONS_REQUEST_RECORD_AUDIO
+        )
     }
 
 
@@ -112,7 +125,6 @@ class WebViewFragment : Fragment() {
                 }
             }
         }
-
         setupWebChromeClient()
         webViewMain.loadUrl(url)
     }
