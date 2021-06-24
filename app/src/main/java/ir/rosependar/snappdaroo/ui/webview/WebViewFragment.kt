@@ -3,7 +3,6 @@ package ir.rosependar.snappdaroo.ui.webview
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -25,7 +24,6 @@ import androidx.navigation.fragment.findNavController
 import ir.rosependar.snappdaroo.R
 import ir.rosependar.snappdaroo.utils.errorToast
 import ir.rosependar.snappdaroo.utils.l
-import ir.rosependar.snappdaroo.utils.successToast
 import kotlinx.android.synthetic.main.web_view_fragment.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
@@ -181,9 +179,10 @@ class WebViewFragment : Fragment() {
                         takePictureIntent = null
                     }
                 }
+
                 val contentSelectionIntent = Intent(Intent.ACTION_GET_CONTENT)
                 contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE)
-                contentSelectionIntent.type = "image/*"
+                contentSelectionIntent.type = "*/*"
                 val intentArray: Array<Intent?> =
                     takePictureIntent?.let { arrayOf(it) } ?: arrayOfNulls(0)
                 val chooserIntent = Intent(Intent.ACTION_CHOOSER)
