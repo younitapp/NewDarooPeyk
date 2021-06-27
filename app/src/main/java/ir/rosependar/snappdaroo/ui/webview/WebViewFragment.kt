@@ -95,6 +95,8 @@ class WebViewFragment : Fragment() {
         webViewMain.settings.saveFormData = true
         webViewMain.settings.setSupportZoom(false)
         webViewMain.settings.pluginState = WebSettings.PluginState.ON
+        webViewMain.settings.allowFileAccessFromFileURLs = true
+        webViewMain.settings.allowUniversalAccessFromFileURLs = true
         webViewMain.visibility = View.INVISIBLE
 
         webViewMain.webViewClient = object : WebViewClient() {
@@ -233,7 +235,7 @@ class WebViewFragment : Fragment() {
                     // captureIntent.putExtra(MediaStore.EXTRA_SCREEN_ORIENTATION, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
                     val i = Intent(Intent.ACTION_GET_CONTENT)
                     i.addCategory(Intent.CATEGORY_OPENABLE)
-                    i.type = "image/*"
+                    i.type = "*/*"
                     val chooserIntent = Intent.createChooser(i, getString(R.string.image_chooser))
                     chooserIntent.putExtra(
                         Intent.EXTRA_INITIAL_INTENTS,
