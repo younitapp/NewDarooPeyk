@@ -26,7 +26,7 @@ object Validation {
     fun checkEmail(editText: EditText): Boolean {
         val pattern: Pattern = Patterns.EMAIL_ADDRESS
         val checked = pattern.matcher(editText.text.toString()).matches()
-        if(!checked) {
+        if (!checked) {
             editText.error = "ایمیل صحیح نمی باشد."
             editText.requestFocus()
         }
@@ -59,6 +59,22 @@ object Validation {
 
         if (input == "" || input.isEmpty()) {
             editText.error = "کد پستی نباید خالی باشد"
+            editText.requestFocus()
+            return false
+        }
+        return true
+    }
+
+    fun checkMelliCode(editText: EditText): Boolean {
+        val input = editText.text.toString().trim()
+        if (input.length != 10) {
+            editText.error = "کد ملی باید 10 رقمی باشد"
+            editText.requestFocus()
+            return false
+        }
+
+        if (input == "" || input.isEmpty()) {
+            editText.error = "کد ملی نباید خالی باشد"
             editText.requestFocus()
             return false
         }

@@ -145,8 +145,13 @@ class HomeFragment : Fragment(), ItemClickListener {
     }
 
     override fun OnLinkClicked(link: String) {
+        l("milLink $link")
+        val deviceId = Prefs.getInstance()?.getDeviceId()
+        val apiToken = Prefs.getInstance()?.getToken()
+        val newLink = "$link/?d=$deviceId&t=$apiToken"
+        l("newLink $newLink")
         findNavController().navigate(R.id.action_homeFragment_to_webViewFragment, Bundle().apply {
-            putString("url", link)
+            putString("url", newLink)
         })
     }
 

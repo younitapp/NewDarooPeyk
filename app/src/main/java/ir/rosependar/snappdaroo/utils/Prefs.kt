@@ -8,7 +8,8 @@ class Prefs private constructor() {
 
     companion object {
 
-        @get:Synchronized var prefs: Prefs? = null
+        @get:Synchronized
+        var prefs: Prefs? = null
             private set
 
         fun getInstance(): Prefs? {
@@ -18,7 +19,8 @@ class Prefs private constructor() {
             return prefs!!
         }
 
-        @get:Synchronized var sharedPreferences: SharedPreferences? = null
+        @get:Synchronized
+        var sharedPreferences: SharedPreferences? = null
             private set
 
         private fun get(): SharedPreferences {
@@ -30,28 +32,30 @@ class Prefs private constructor() {
             return sharedPreferences!!
         }
 
-        private const val SP_NAME          = "Snappdaroo"
-        const val TOKEN                    = "TOKEN"
-        const val DEVICE_ID                = "DEVICE_ID"
-        const val BASE_PROVINCE            = "BASE_PROVINCE"
-        const val CATEGORY_VERSION         = "CATEGORY_VERSION"
+        private const val SP_NAME = "Snappdaroo"
+        const val TOKEN = "TOKEN"
+        const val DEVICE_ID = "DEVICE_ID"
+        const val BASE_PROVINCE = "BASE_PROVINCE"
+        const val CATEGORY_VERSION = "CATEGORY_VERSION"
         const val FEATURED_PRODUCT_VERSION = "FEATURED_PRODUCT_VERSION"
-        const val SHIPPING_ACTIVE          = "SHIPPING_ACTIVE"
-        const val MIN_ORDER                = "MIN_ORDER"
-        const val VENDOR_NUMBER                = "VENDOR_NUMBER"
-        const val VENDOR_WEBPAGE                = "VENDOR_WEBPAGE"
-        const val MAINPAGE_CATEGORIES                = "MAINPAGE_CATEGORIES"
-        const val BACKGROUND_IMAGE                = "BACKGROUND_IMAGE"
-        const val PROFILE_STATUS                = "PROFILE_STATUS"
+        const val SHIPPING_ACTIVE = "SHIPPING_ACTIVE"
+        const val MIN_ORDER = "MIN_ORDER"
+        const val VENDOR_NUMBER = "VENDOR_NUMBER"
+        const val VENDOR_WEBPAGE = "VENDOR_WEBPAGE"
+        const val MAINPAGE_CATEGORIES = "MAINPAGE_CATEGORIES"
+        const val BACKGROUND_IMAGE = "BACKGROUND_IMAGE"
+        const val PROFILE_STATUS = "PROFILE_STATUS"
 
     }
+
     fun saveProfileStatus(status: Int) {
         get().edit().putInt(PROFILE_STATUS, status).commit()
     }
 
     fun getProfileStatus(): Int {
-        return get().getInt(PROFILE_STATUS,0)
+        return get().getInt(PROFILE_STATUS, 0)
     }
+
     fun saveBackground(background: String) {
         get().edit().putString(BACKGROUND_IMAGE, background).apply()
     }
@@ -67,6 +71,7 @@ class Prefs private constructor() {
     fun getToken(): String {
         return get().getString(TOKEN, "")!!
     }
+
     fun saveVendorNumber(number: String) {
         get().edit().putString(VENDOR_NUMBER, number).apply()
     }
@@ -90,7 +95,6 @@ class Prefs private constructor() {
     fun getMainPageCategories(): String {
         return get().getString(MAINPAGE_CATEGORIES, "")!!
     }
-
 
 
     fun saveDeviceId(deviceId: String) {

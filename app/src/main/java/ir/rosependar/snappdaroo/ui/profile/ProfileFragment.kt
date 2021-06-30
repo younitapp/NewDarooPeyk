@@ -43,6 +43,7 @@ class ProfileFragment : Fragment() {
     private var selectedArea: Area? = null
     private var selectedCountry: Country? = null
     private var selectedBirthDate: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,24 +62,27 @@ class ProfileFragment : Fragment() {
                  startActivity(this)
              }
          }*/
-        viewModel.mainLiveData.observe(viewLifecycleOwner, Observer { response ->
-
+        viewModel.mainLiveData.observe(viewLifecycleOwner, { response ->
 
             l(response.cities.toString())
             /* ProvinceDialogFragment.newInstance(mutableListOf(),it.provinces!!.data).show(parentFragmentManager,"")*/
             if (response.countries != null && response.cities != null && response.provinces != null && response.profile != null && response.areas != null) {
                 if (response.profile.data != null && response.profile.data[0] != null) {
+
                     val profile = response.profile.data[0]
+                    l("milProfileResponse $profile")
+
                     edt_mobile.editText!!.setText(profile?.property?.tel)
                     edt_name.editText!!.setText(profile?.first_name)
-
                     edt_last_name.editText!!.setText(profile?.last_name)
                     edt_postalcode.editText!!.setText(profile?.property?.postal_code?.toString())
                     edt_adress.editText!!.setText(profile?.property?.address)
                     edt_insurance.editText!!.setText(profile?.property?.insurance_code)
+                    edt_nId.editText!!.setText(profile?.property?.nid.toString())
                     selectProvince(profile?.property?.state?.toInt())
                     selectCity(profile?.property?.city?.toInt())
                     selectArea(profile?.property?.area?.toInt())
+
                     try {
                         selectBirthDay(profile?.property?.birthday.toString())
                     } catch (e: Exception) {
@@ -179,7 +183,8 @@ class ProfileFragment : Fragment() {
                 Validation.checkName(edt_name.editText!!) &&
                 Validation.checkName(edt_last_name.editText!!) &&
                 Validation.checkPostalCode(edt_postalcode.editText!!) &&
-                Validation.checkAddress(edt_adress.editText!!)
+                Validation.checkAddress(edt_adress.editText!!) &&
+                Validation.checkMelliCode(edt_nId.editText!!)
             ) {
                 viewModel.saveProfile(
                     first_name = edt_name.editText!!.text.toString(),
@@ -193,7 +198,8 @@ class ProfileFragment : Fragment() {
                     postal_code = edt_postalcode.editText!!.text.toString(),
                     gender = "",
                     birthDay = selectedBirthDate!!,
-                    insuranceCode = edt_insurance.editText!!.text.toString()
+                    insuranceCode = edt_insurance.editText!!.text.toString(),
+                    nId = edt_nId.editText!!.text.toString()
                 )
                     .observe(viewLifecycleOwner, Observer {
                         if (it?.body() != null && it.body()?.status == 1) {

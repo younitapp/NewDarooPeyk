@@ -149,7 +149,8 @@ data class ProfileProperty(
     val area: String? = null,
     val state: Long? = null,
     val insurance_code: String? = null,
-    val tel: String? = null
+    val tel: String? = null,
+    val nid: Long? = null
 )
 
 data class ApiSettingsResponse(

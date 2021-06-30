@@ -36,7 +36,8 @@ class DataRepository(private val apiInterface: ApiInterface) {
         areaCode: String,
         gender: String,
         insurance_code: String,
-        birthday: String
+        birthday: String,
+        nId: String
     ): Response<BaseResponse> {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
@@ -54,6 +55,7 @@ class DataRepository(private val apiInterface: ApiInterface) {
             .addFormDataPart("postal_code", postal_code)
             .addFormDataPart("insurance_code", insurance_code)
             .addFormDataPart("birthday", birthday)
+            .addFormDataPart("nid", nId)
             .build()
         return apiInterface.saveProfile(requestBody)
     }

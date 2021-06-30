@@ -21,6 +21,8 @@ class ProfileViewModel(
     private val dataRepository: DataRepository,
     private val roomRepository: RoomRepository
 ) : ViewModel() {
+
+
     val mainLiveData = liveData(Dispatchers.IO) {
         supervisorScope {
 
@@ -29,7 +31,6 @@ class ProfileViewModel(
             var countries: List<Country>? = null
             var areas: List<Area>? = null
             var profile: ProfileResponse? = null
-
 
             val call3 = async { dataRepository.getProfile() }
 
@@ -105,6 +106,7 @@ class ProfileViewModel(
             emit(null)
         }
     }
+
     fun getAreasByCityId(areaId: Long) = liveData(Dispatchers.IO) {
         try {
             emit(roomRepository.getAreas(areaId))
@@ -112,6 +114,7 @@ class ProfileViewModel(
             emit(null)
         }
     }
+
     fun getCountries() = liveData(Dispatchers.IO) {
         try {
             emit(roomRepository.getCountries())
@@ -119,6 +122,7 @@ class ProfileViewModel(
             emit(null)
         }
     }
+
     fun findAreaByCode(code: Int) = liveData(Dispatchers.IO) {
         try {
             emit(roomRepository.getAreaById(code))
@@ -134,6 +138,7 @@ class ProfileViewModel(
             emit(null)
         }
     }
+
     fun findProvinceById(id: Int) = liveData(Dispatchers.IO) {
         try {
             emit(roomRepository.getProvinceById(id))
@@ -171,22 +176,28 @@ class ProfileViewModel(
             }
         }
     }
-    fun searchInAreas(areaId : Long,query: String): LiveData<List<Area>?> {
+
+    fun searchInAreas(areaId: Long, query: String): LiveData<List<Area>?> {
         return liveData(Dispatchers.IO) {
             try {
-                emit(roomRepository.searchInAreas(areaId,query))
+                emit(roomRepository.searchInAreas(areaId, query))
             } catch (e: Exception) {
                 emit(null)
             }
         }
     }
+
     fun saveProfile(
-        mobile : String,
+        mobile: String,
         first_name: String, last_name: String,
         country: String, provinceId: String,
         cityId: String, address: String,
         postal_code: String,
-        gender: String, insuranceCode: String, birthDay: String , areaCode:String
+        gender: String,
+        insuranceCode: String,
+        birthDay: String,
+        areaCode: String,
+        nId: String
     ) = liveData(Dispatchers.IO) {
         try {
             emit(
@@ -194,7 +205,7 @@ class ProfileViewModel(
                     first_name = first_name,
                     last_name = last_name,
                     country = country,
-                    mobile= mobile,
+                    mobile = mobile,
                     provinceId = provinceId,
                     areaCode = areaCode,
                     cityId = cityId,
@@ -202,7 +213,8 @@ class ProfileViewModel(
                     postal_code = postal_code,
                     gender = gender,
                     insurance_code = insuranceCode,
-                    birthday = birthDay
+                    birthday = birthDay,
+                    nId = nId
                 )
             )
         } catch (e: IOException) {
