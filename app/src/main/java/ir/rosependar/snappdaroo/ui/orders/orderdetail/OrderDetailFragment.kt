@@ -17,7 +17,9 @@ import com.stfalcon.imageviewer.StfalconImageViewer
 import ir.rosependar.snappdaroo.R
 import ir.rosependar.snappdaroo.models.CodeName
 import ir.rosependar.snappdaroo.utils.PriceUtil
+import ir.rosependar.snappdaroo.utils.errorToast
 import ir.rosependar.snappdaroo.utils.l
+import ir.rosependar.snappdaroo.utils.successToast
 import kotlinx.android.synthetic.main.check_out_fragment.*
 import kotlinx.android.synthetic.main.order_detail_fragment.*
 import kotlinx.android.synthetic.main.order_detail_fragment.animationView
@@ -57,11 +59,13 @@ class OrderDetailFragment : Fragment() {
         btn_back.setOnClickListener {
             findNavController().popBackStack()
         }
+
         try {
-            viewModel.orderData.observe(viewLifecycleOwner, Observer { response ->
+            viewModel.orderData.observe(viewLifecycleOwner, { response ->
                 if (response?.body() != null && response.body()!!.status == 1 && response.body()!!.data != null) {
                     val order = response.body()?.data!!.prescription!![0]
-                    var color: Int = 0
+                    l("milMyOrder $order")
+                    var color = 0
                     when (order.status_id) {
                         1 -> {
                             color = Color.parseColor("#A9A9A9")
@@ -75,7 +79,6 @@ class OrderDetailFragment : Fragment() {
                         }
                         4 -> {
                             color = Color.parseColor("#00FFA6")
-
                         }
                         5 -> {
                             color = Color.parseColor("#003EFF")
@@ -83,20 +86,38 @@ class OrderDetailFragment : Fragment() {
                         6 -> {
                             color = Color.parseColor("#FF003A")
                         }
-                        7->{
+                        7 -> {
                             color = Color.parseColor("#8700FF")
                         }
-                        8->{
+                        8 -> {
                             color = Color.parseColor("#02B4A9")
                         }
-                        9->{
+                        9 -> {
                             color = Color.parseColor("#C69300")
                         }
                     }
 
+                    if (order.status_id == 1) {
+                        btn_delete.visibility = View.VISIBLE
+                        btn_delete.setOnClickListener {
+                            androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                                .setMessage("آیا مطمئن هستید؟")
+                                .setCancelable(false)
+                                .setPositiveButton(
+                                    "بله"
+                                ) { _, _ -> viewModel.deleteOrder(order.id.toString()) }
+                                .setNegativeButton(
+                                    "خیر"
+                                ) { _, _ -> }
+                                .create().show()
+                            observeDeleteResponse()
+                        }
+
+                    } else {
+                        btn_delete.visibility = View.GONE
+                    }
 
                     order_history_createdAt.text = order.created_at
-
                     order_history_status.setTextColor(color)
                     img_status.backgroundTintList = ColorStateList.valueOf(color)
 
@@ -138,7 +159,7 @@ class OrderDetailFragment : Fragment() {
                                         Bundle().apply {
                                             putString("order_id", orderId)
                                         })
-                                }catch (e : Exception){
+                                } catch (e: Exception) {
                                     findNavController().navigate(
                                         R.id.action_orderDetailFragment3_to_checkOutFragment2,
                                         Bundle().apply {
@@ -146,28 +167,28 @@ class OrderDetailFragment : Fragment() {
                                         })
                                 }
                             }
-                        } else if (status!!.code >= 4 && response.body()?.data!!.checkout !=null) {
-                            if(status.code == 4 ){
+                        } else if (status!!.code >= 4 && response.body()?.data!!.checkout != null) {
+                            if (status.code == 4) {
                                 txt_status.visibility == View.VISIBLE
                             }
-                            if(response.body() != null || response.body()?.data !=null) {
-                               if(!response.body()?.data?.checkout.isNullOrEmpty()) {
-                                   lyt_successfull.visibility = View.VISIBLE
-                                   val checkout = response.body()?.data?.checkout!![0]
-                                   val totalPrice = PriceUtil.getThousandSeparator()
-                                       .format(checkout.total_price / 10)
-                                   val shippingPrice = PriceUtil.getThousandSeparator()
-                                       .format(checkout.shipping_price / 10)
-                                   total_price.text = "هزینه پرداختی : ${totalPrice} تومان"
-                                   shipping_price.text = "هزینه ارسال : ${shippingPrice} تومان"
-                                   if(!checkout.comments.isNullOrEmpty()){
-                                       txt_comments.visibility = View.VISIBLE
-                                       txt_comments.text = "توضیحات مرکز : ${checkout.comments}"
-                                   }else{
-                                       txt_comments.visibility = View.GONE
-                                   }
+                            if (response.body() != null || response.body()?.data != null) {
+                                if (!response.body()?.data?.checkout.isNullOrEmpty()) {
+                                    lyt_successfull.visibility = View.VISIBLE
+                                    val checkout = response.body()?.data?.checkout!![0]
+                                    val totalPrice = PriceUtil.getThousandSeparator()
+                                        .format(checkout.total_price / 10)
+                                    val shippingPrice = PriceUtil.getThousandSeparator()
+                                        .format(checkout.shipping_price / 10)
+                                    total_price.text = "هزینه پرداختی : ${totalPrice} تومان"
+                                    shipping_price.text = "هزینه ارسال : ${shippingPrice} تومان"
+                                    if (!checkout.comments.isNullOrEmpty()) {
+                                        txt_comments.visibility = View.VISIBLE
+                                        txt_comments.text = "توضیحات مرکز : ${checkout.comments}"
+                                    } else {
+                                        txt_comments.visibility = View.GONE
+                                    }
 
-                               }
+                                }
                             }
                         }
                     })
@@ -179,6 +200,19 @@ class OrderDetailFragment : Fragment() {
         } catch (e: Exception) {
             findNavController().popBackStack()
         }
+    }
+
+    private fun observeDeleteResponse() {
+        viewModel.responseDeleteOrder.observe(viewLifecycleOwner, {
+            if (it != null && it.isSuccessful) {
+                if (it.body()!!.status == 1) {
+                    successToast("درخواست با موفقیت حذف شد")
+                    findNavController().popBackStack()
+                } else {
+                    errorToast("مشکلی در حذف پیش آمده. دوباره تلاش کنید")
+                }
+            }
+        })
     }
 
 }

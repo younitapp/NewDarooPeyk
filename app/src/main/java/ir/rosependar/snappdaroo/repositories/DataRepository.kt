@@ -62,6 +62,7 @@ class DataRepository(private val apiInterface: ApiInterface) {
 
     suspend fun getApiSettings() = apiInterface.getApiSettings()
     suspend fun getOrder(orderId: String) = apiInterface.getOrder(orderId = orderId)
+    suspend fun deleteOrder(orderId: String) = apiInterface.deleteOrder(orderId = orderId)
     suspend fun getCheckOut(orderId: String) = apiInterface.getCheckOut(orderId = orderId)
     suspend fun getRequestPayment(orderId: String) =
         apiInterface.getRequestPayment(orderId = orderId)

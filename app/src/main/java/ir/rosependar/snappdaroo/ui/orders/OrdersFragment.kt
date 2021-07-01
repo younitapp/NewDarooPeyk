@@ -34,47 +34,40 @@ class OrdersFragment : Fragment(), orderClickListener {
         return inflater.inflate(R.layout.orders_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fetchData()
     }
 
 
+    private fun fetchData() {
 
-    private fun fetchData(){
-
-        viewModel.settingsData.observe(viewLifecycleOwner, Observer { settings ->
+        viewModel.settingsData.observe(viewLifecycleOwner, { settings ->
 
             val statusCodes = settings[0].app_prs_statuses
             val types = settings[0].app_prs_types
-            viewModel.getOrderData().observe(viewLifecycleOwner, Observer {
-                if(it!=null) {
-                    if (it?.body()!!.data != null && it.body()?.status == 1) {
-                        l(it?.body()!!.data.toString())
+            viewModel.getOrderData().observe(viewLifecycleOwner, {
+                if (it != null) {
+                    if (it.body()!!.data != null && it.body()?.status == 1) {
+                        l(it.body()!!.data.toString())
                         rv_orders.layoutManager = LinearLayoutManager(requireContext())
                         if (it.body()!!.data!!.isNotEmpty())
                             rv_orders.adapter =
                                 OrderAdapter(this, it.body()!!.data!!, types, statusCodes)
                         animationView.visibility = View.GONE
                         orders_layout.visibility = View.VISIBLE
-                    } else if (it?.body()!!.data != null && it.body()?.status == 2) {
+                    } else if (it.body()!!.data != null && it.body()?.status == 2) {
                         errorToast("هیچ سفارشی توسط شما ثبت نشده است.")
                         animationView.visibility = View.GONE
                     }
-                }else{
+                } else {
                     errorToast("هیچ سفارشی توسط شما ثبت نشده است.")
                     animationView.visibility = View.GONE
                 }
             })
         })
     }
+
     override fun OnOrderClicked(id: Int, types: List<CodeName>) {
         findNavController().navigate(
             R.id.action_ordersFragment_to_orderDetailFragment,

@@ -7,6 +7,14 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiInterface {
+
+    @GET("rpsapi_remove_order")
+    suspend fun deleteOrder(
+        @Query("device_id") device_id: String = Prefs.getInstance()!!.getDeviceId(),
+        @Query("api_token") api_token: String = Prefs.getInstance()!!.getToken(),
+        @Query("prescription_id") orderId: String
+    ): Response<BaseResponse>
+
     @GET("rpsapi_get_countries")
     suspend fun getCountryList(
     ): Response<CountryResponse>

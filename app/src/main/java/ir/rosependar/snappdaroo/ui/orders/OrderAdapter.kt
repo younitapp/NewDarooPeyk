@@ -15,6 +15,7 @@ import ir.rosependar.snappdaroo.MainActivity
 import ir.rosependar.snappdaroo.R
 import ir.rosependar.snappdaroo.models.CodeName
 import ir.rosependar.snappdaroo.models.Prescription
+import ir.rosependar.snappdaroo.utils.l
 import saman.zamani.persiandate.PersianDate
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -22,10 +23,11 @@ import java.util.*
 
 class OrderAdapter(
     val listener: orderClickListener,
-    val orderList: List<Prescription>,
-    val types: List<CodeName>,
-    val statuses: List<CodeName>
+    private val orderList: List<Prescription>,
+    private val types: List<CodeName>,
+    private val statuses: List<CodeName>
 ) : RecyclerView.Adapter<OrderAdapter.myViewHolder>() {
+
     inner class myViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val txt_orderNumber = itemView.findViewById<TextView>(R.id.order_history_orderNumber)
@@ -48,7 +50,7 @@ class OrderAdapter(
     override fun onBindViewHolder(holder: myViewHolder, position: Int) {
         val order = orderList[position]
         holder.txt_orderNumber.text = "شماره درخواست : ${order.id}"
-        holder.txt_date.text =  order.created_at
+        holder.txt_date.text = order.created_at
         val typeText = types.find {
             it.code == order.type
         }
@@ -78,21 +80,22 @@ class OrderAdapter(
             6 -> {
                 color = Color.parseColor("#FF003A")
             }
-            7->{
+            7 -> {
                 color = Color.parseColor("#8700FF")
             }
-            8->{
+            8 -> {
                 color = Color.parseColor("#02B4A9")
             }
-            9->{
+            9 -> {
                 color = Color.parseColor("#C69300")
             }
         }
+        l("milOrder $order")
         holder.txt_status.setTextColor(color)
         holder.img_status.backgroundTintList = ColorStateList.valueOf(color)
         holder.lyt_main.setOnClickListener {
             listener.OnOrderClicked(
-                order.id,types
+                order.id, types
 
             )
         }
@@ -101,5 +104,5 @@ class OrderAdapter(
 }
 
 interface orderClickListener {
-    fun OnOrderClicked(id: Int, types : List<CodeName>)
+    fun OnOrderClicked(id: Int, types: List<CodeName>)
 }

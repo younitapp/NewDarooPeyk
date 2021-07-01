@@ -11,18 +11,22 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         app:lottie_autoPlay="true"
-        tools:visibility="gone"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loading" />
+        app:lottie_rawRes="@raw/loading"
+        tools:visibility="gone" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout android:id="@+id/lyt_detail" android:visibility="gone"
+
+        <LinearLayout
+            android:id="@+id/lyt_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:visibility="visible"
             android:orientation="vertical"
-            tools:context=".ui.orders.orderdetail.OrderDetailFragment">
+            android:visibility="gone"
+            tools:context=".ui.orders.orderdetail.OrderDetailFragment"
+            tools:visibility="visible">
 
 
             <RelativeLayout
@@ -236,30 +240,32 @@
                             </LinearLayout>
 
                         </RelativeLayout>
+
                         <LinearLayout
-                            android:layout_width="match_parent"
                             android:id="@+id/lyt_successfull"
-                            android:visibility="gone"
-                            tools:visibility="visible"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            tools:visibility="visible">
+
                             <TextView
                                 android:id="@+id/txt_status"
-                                android:visibility="gone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="8dp"
                                 android:fontFamily="@font/iran_sans_bold"
                                 android:text="پرداخت شما با موفقیت انجام شده است. و درخواست شما در حال پردازش می باشد."
                                 android:textColor="#000"
+                                android:visibility="gone"
                                 tools:visibility="visible" />
 
                             <androidx.constraintlayout.widget.ConstraintLayout
                                 android:layout_width="match_parent"
-                                android:background="@drawable/dashed_bg"
-                                android:padding="8dp"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:background="@drawable/dashed_bg"
+                                android:orientation="horizontal"
+                                android:padding="8dp">
 
                                 <TextView
                                     android:id="@+id/total_price"
@@ -309,31 +315,67 @@
 
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="70dp"
 
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/btn_pay"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="8dp"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:visibility="gone"
-                            app:cardBackgroundColor="@color/bg_toast_success"
-                            app:cardCornerRadius="8dp"
-                            tools:visibility="visible">
+                            android:weightSum="2">
 
-                            <TextView
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/btn_pay"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
-                                android:fontFamily="@font/iran_sans_bold"
-                                android:padding="8dp"
-                                android:text="پرداخت سفارش"
-                                android:textColor="#fff" />
+                                android:layout_margin="16dp"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:visibility="gone"
+                                app:cardBackgroundColor="@color/bg_toast_success"
+                                app:cardCornerRadius="8dp"
+                                tools:visibility="visible">
 
-                        </androidx.cardview.widget.CardView>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="@font/iran_sans_bold"
+                                    android:padding="8dp"
+                                    android:text="پرداخت سفارش"
+                                    android:textColor="#fff" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/btn_delete"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_margin="16dp"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:visibility="gone"
+                                app:cardBackgroundColor="@color/bg_toast_error"
+                                app:cardCornerRadius="8dp"
+                                tools:visibility="visible">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="@font/iran_sans_bold"
+                                    android:padding="8dp"
+                                    android:text="حذف سفارش"
+                                    android:textColor="#fff" />
+
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+
                     </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
