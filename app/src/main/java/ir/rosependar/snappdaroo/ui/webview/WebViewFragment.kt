@@ -47,7 +47,7 @@ class WebViewFragment : Fragment() {
     private var mFilePathCallback: ValueCallback<Array<Uri?>?>? = null
     private var mCameraPhotoPath: String? = null
 
-    private val MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 101
+    private val REQUEST_PERMISSION_CODE = 101
     private var myRequest: PermissionRequest? = null
 
 
@@ -73,10 +73,22 @@ class WebViewFragment : Fragment() {
     }
 
     private fun checkPermissionFromDevice(): Boolean {
+        val writeExternalStorageResult = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+
+        val readExternalStorageResult = ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+
         val recordAudioResult =
             ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)
 
-        return recordAudioResult == PackageManager.PERMISSION_GRANTED
+        return writeExternalStorageResult == PackageManager.PERMISSION_GRANTED &&
+                recordAudioResult == PackageManager.PERMISSION_GRANTED &&
+                readExternalStorageResult == PackageManager.PERMISSION_GRANTED
     }
 
 
@@ -84,7 +96,9 @@ class WebViewFragment : Fragment() {
         ActivityCompat.requestPermissions(
             requireActivity(), arrayOf(
                 Manifest.permission.RECORD_AUDIO,
-            ), MY_PERMISSIONS_REQUEST_RECORD_AUDIO
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ), REQUEST_PERMISSION_CODE
         )
     }
 
@@ -141,7 +155,7 @@ class WebViewFragment : Fragment() {
                             askForPermission(
                                 request.origin.toString(),
                                 Manifest.permission.RECORD_AUDIO,
-                                MY_PERMISSIONS_REQUEST_RECORD_AUDIO
+                                REQUEST_PERMISSION_CODE
                             )
                         }
                     }
@@ -158,8 +172,8 @@ class WebViewFragment : Fragment() {
                 }
                 mFilePathCallback = filePathCallback
                 var takePictureIntent: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                if (takePictureIntent!!.resolveActivity(activity!!.packageManager) != null) {
 
+                if (takePictureIntent!!.resolveActivity(activity!!.packageManager) != null) {
                     // create the file where the photo should go
                     var photoFile: File? = null
                     try {
@@ -200,7 +214,7 @@ class WebViewFragment : Fragment() {
             private fun createImageFile(): File {
                 var imageStorageDir = File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    "DirectoryNameHere"
+                    "Daroo Peyk"
                 )
                 if (!imageStorageDir.exists()) {
                     imageStorageDir.mkdirs()
@@ -208,7 +222,7 @@ class WebViewFragment : Fragment() {
 
                 // create an image file name
                 imageStorageDir = File(
-                    imageStorageDir.toString() + File.separator.toString() + "IMG_" + System.currentTimeMillis()
+                    imageStorageDir.path + File.separator.toString() + "IMG_" + System.currentTimeMillis()
                         .toString() + ".jpg"
                 )
                 return imageStorageDir
@@ -306,7 +320,7 @@ class WebViewFragment : Fragment() {
     ) {
 
         when (requestCode) {
-            MY_PERMISSIONS_REQUEST_RECORD_AUDIO -> {
+            REQUEST_PERMISSION_CODE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted
                     myRequest!!.grant(myRequest!!.resources)
