@@ -32,6 +32,7 @@ import ir.rosependar.snappdaroo.dialogs.TimePickerListener
 import ir.rosependar.snappdaroo.models.CodeName
 import ir.rosependar.snappdaroo.utils.*
 import kotlinx.android.synthetic.main.submit_order_fragment.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import net.gotev.uploadservice.data.UploadInfo
@@ -48,6 +49,7 @@ import java.util.*
 
 
 class SubmitOrderFragment : Fragment() {
+
     private var isCamera: Boolean = false
     private var mImageBitmap: Bitmap? = null
     private var mCurrentPhotoPath: String? = null
@@ -62,6 +64,8 @@ class SubmitOrderFragment : Fragment() {
     private var deliveryTimes = mutableListOf<CodeName>()
     private var selectedTimeId: Int? = null
     val loadingDialog by lazy { CustomProgressDialog().show(requireContext(), "در حال ارسال") }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,14 +75,14 @@ class SubmitOrderFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.settingsData.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        viewModel.settingsData.observe(viewLifecycleOwner, {
             deliveryTimes = it.app_prs_delivery_time.toMutableList()
         })
         initViews()
     }
 
     private fun initViews() {
-        l("type id is : ${type.toString()}")
+        l("type id is : $type")
         btn_back.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -250,20 +254,16 @@ class SubmitOrderFragment : Fragment() {
         }
     }
 
-    fun sendFile() {
-        var fileUri: Uri? = null
-        fileUri = if (isCamera)
+    private fun sendFile() {
+        var fileUri: Uri? = if (isCamera)
             Uri.parse("file:/$filePath")
         else {
             Uri.parse("file://$filePath")
         }
 
-        GlobalScope.launch {
-
+        GlobalScope.launch(Dispatchers.Main) {
 
             if (filePath.isEmpty()) {
-
-
                 MultipartUploadRequest(
                     requireContext(),
                     serverUrl = Constants.BASE_URL + "rpsapi_order"
