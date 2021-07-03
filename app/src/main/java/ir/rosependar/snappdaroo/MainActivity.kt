@@ -101,8 +101,7 @@ class MainActivity : AppCompatActivity() {
             listOf(
                 R.navigation.nav_home,
                 R.navigation.nav_profile,
-                R.navigation.nav_orders,
-                R.navigation.nav_contacts
+                R.navigation.nav_orders
             )
 
         // Setup the bottom navigation view with a list of navigation graphs

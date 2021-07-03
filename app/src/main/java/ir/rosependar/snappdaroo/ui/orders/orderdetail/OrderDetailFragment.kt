@@ -102,7 +102,7 @@ class OrderDetailFragment : Fragment() {
                         btn_delete.setOnClickListener {
                             androidx.appcompat.app.AlertDialog.Builder(requireContext())
                                 .setMessage("آیا مطمئن هستید؟")
-                                .setCancelable(false)
+                                .setCancelable(true)
                                 .setPositiveButton(
                                     "بله"
                                 ) { _, _ -> viewModel.deleteOrder(order.id.toString()) }
