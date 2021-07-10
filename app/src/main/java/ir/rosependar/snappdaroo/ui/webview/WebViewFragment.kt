@@ -140,7 +140,16 @@ class WebViewFragment : Fragment() {
             }
         }
         setupWebChromeClient()
+        setupDownloadListener()
         webViewMain.loadUrl(url)
+    }
+
+    private fun setupDownloadListener() {
+        webViewMain.setDownloadListener { url, userAgent, contentDisposition, mimetype, contentLength ->
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(url)
+            startActivity(intent)
+        }
     }
 
     private fun setupWebChromeClient() {
