@@ -8,6 +8,11 @@ import retrofit2.http.*
 
 interface ApiInterface {
 
+    @POST("rpsapi_set_bonus")
+    suspend fun sendBonusCode(
+        @Body requestBody: RequestBody
+    ): Response<BaseResponse>
+
     @GET("rpsapi_remove_order")
     suspend fun deleteOrder(
         @Query("device_id") device_id: String = Prefs.getInstance()!!.getDeviceId(),
@@ -94,6 +99,5 @@ interface ApiInterface {
         @Query("device_id") device_id: String = Prefs.getInstance()!!.getDeviceId(),
         @Query("api_token") api_token: String = Prefs.getInstance()!!.getToken(),
         @Query("prescription_id") orderId: String
-    )
-            : Response<PaymentResponse>
+    ): Response<PaymentResponse>
 }

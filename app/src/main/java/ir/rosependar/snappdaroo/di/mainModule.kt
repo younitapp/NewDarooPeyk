@@ -4,6 +4,7 @@ import ir.rosependar.snappdaroo.MainViewModel
 import ir.rosependar.snappdaroo.network.ApiInterface
 import ir.rosependar.snappdaroo.repositories.DataRepository
 import ir.rosependar.snappdaroo.repositories.RoomRepository
+import ir.rosependar.snappdaroo.ui.bonus.BonusViewModel
 import ir.rosependar.snappdaroo.ui.checkout.CheckOutViewModel
 import ir.rosependar.snappdaroo.ui.contacts.ContactsViewModel
 import ir.rosependar.snappdaroo.ui.home.HomeViewModel
@@ -44,6 +45,7 @@ val mainModule = module {
     viewModel { (orderId: String) -> OrderDetailViewModel(get(), get(), orderId) }
     viewModel { ContactsViewModel(get(), get()) }
     viewModel { WebViewViewModel() }
+    viewModel { BonusViewModel() }
 
 }
 

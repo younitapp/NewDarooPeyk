@@ -9,7 +9,7 @@
         android:id="@+id/homeFragment"
         android:name="ir.rosependar.snappdaroo.ui.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment" >
+        tools:layout="@layout/home_fragment">
         <action
             android:id="@+id/action_homeFragment_to_submitOrderFragment"
             app:destination="@id/submitOrderFragment"
@@ -31,6 +31,9 @@
             app:exitAnim="@anim/animate_slide_down_exit"
             app:popEnterAnim="@anim/animate_slide_up_enter"
             app:popExitAnim="@anim/animate_slide_down_exit" />
+        <action
+            android:id="@+id/action_homeFragment_to_bonusFragment"
+            app:destination="@id/bonusFragment" />
     </fragment>
     <fragment
         android:id="@+id/submitOrderFragment"
@@ -40,13 +43,13 @@
         android:id="@+id/orderDetailFragment3"
         android:name="ir.rosependar.snappdaroo.ui.orders.orderdetail.OrderDetailFragment"
         android:label="order_detail_fragment"
-        tools:layout="@layout/order_detail_fragment" >
+        tools:layout="@layout/order_detail_fragment">
         <action
             android:id="@+id/action_orderDetailFragment3_to_checkOutFragment2"
             app:destination="@id/checkOutFragment2"
             app:enterAnim="@anim/animate_fade_enter"
             app:exitAnim="@anim/animate_in_out_exit"
-            app:popEnterAnim="@anim/animate_in_out_enter"/>
+            app:popEnterAnim="@anim/animate_in_out_enter" />
     </fragment>
     <fragment
         android:id="@+id/checkOutFragment2"
@@ -57,4 +60,9 @@
         android:name="ir.rosependar.snappdaroo.ui.webview.WebViewFragment"
         android:label="web_view_fragment"
         tools:layout="@layout/web_view_fragment" />
+    <dialog
+        android:id="@+id/bonusFragment"
+        android:name="ir.rosependar.snappdaroo.ui.bonus.BonusFragment"
+        android:label="bonus_fragment"
+        tools:layout="@layout/bonus_fragment" />
 </navigation>

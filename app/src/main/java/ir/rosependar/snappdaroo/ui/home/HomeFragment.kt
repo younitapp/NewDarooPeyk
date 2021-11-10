@@ -7,6 +7,7 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -32,15 +33,25 @@ class HomeFragment : Fragment(), ItemClickListener {
     }
 
     private val viewModel: HomeViewModel by viewModel()
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
+    private lateinit var imgBonus: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.home_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        imgBonus = view.findViewById(R.id.img_bonus)
+        clickOnBonus()
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun clickOnBonus() {
+        imgBonus.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToBonusFragment())
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
