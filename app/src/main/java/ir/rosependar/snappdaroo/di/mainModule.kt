@@ -45,7 +45,7 @@ val mainModule = module {
     viewModel { (orderId: String) -> OrderDetailViewModel(get(), get(), orderId) }
     viewModel { ContactsViewModel(get(), get()) }
     viewModel { WebViewViewModel() }
-    viewModel { BonusViewModel() }
+    viewModel { BonusViewModel(get()) }
 
 }
 

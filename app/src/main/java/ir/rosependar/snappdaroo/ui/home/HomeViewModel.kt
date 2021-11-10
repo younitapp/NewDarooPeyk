@@ -17,6 +17,7 @@ class HomeViewModel(
     private val dataRepository: DataRepository,
     private val roomRepository: RoomRepository
 ) : ViewModel() {
+
     val sliderResponse = liveData(Dispatchers.IO) {
         try {
             emit(dataRepository.getMainPage())
