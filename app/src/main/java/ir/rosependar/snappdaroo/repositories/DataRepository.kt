@@ -1,5 +1,6 @@
 package ir.rosependar.snappdaroo.repositories
 
+import android.util.Log
 import ir.rosependar.snappdaroo.models.BaseResponse
 import ir.rosependar.snappdaroo.network.ApiInterface
 import ir.rosependar.snappdaroo.utils.Prefs
@@ -12,11 +13,9 @@ class DataRepository(private val apiInterface: ApiInterface) {
     suspend fun sendBonusCode(bonus: String): Response<BaseResponse> {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("device_id", Prefs.getInstance()!!.getDeviceId())
-            .addFormDataPart("api_token", Prefs.getInstance()!!.getToken())
             .addFormDataPart("bonus", bonus)
             .build()
-        return apiInterface.sendBonusCode(requestBody)
+        return apiInterface.sendBonusCode(requestBody = requestBody)
     }
 
     suspend fun sendSms(phoneNumber: String) = apiInterface.getCode(phone_number = phoneNumber)
