@@ -19,6 +19,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CheckOutFragment : Fragment() {
     val prescriptionId by lazy { requireArguments().getString("order_id") }
+
     companion object {
         fun newInstance() = CheckOutFragment()
     }
@@ -39,25 +40,33 @@ class CheckOutFragment : Fragment() {
         }
 
         viewModel.getCheckOutFactor(prescriptionId!!).observe(viewLifecycleOwner, Observer {
-            if(it?.body()?.status == 1){
+            if (it?.body()?.status == 1) {
                 val response = it.body()!!.data
-                txt_order_price.text = PriceUtil.getThousandSeparator().format(response.order_price / 10) + " تومان"
-                txt_shipping_price.text = PriceUtil.getThousandSeparator().format(response.shipping_price / 10)+ " تومان"
-                txt_total_price.text = PriceUtil.getThousandSeparator().format(response.total_price / 10)+ " تومان"
+                txt_order_price.text =
+                    PriceUtil.getThousandSeparator().format(response.order_price / 10) + " تومان"
+                txt_shipping_price.text =
+                    PriceUtil.getThousandSeparator().format(response.shipping_price / 10) + " تومان"
+                txt_total_price.text =
+                    PriceUtil.getThousandSeparator().format(response.total_price / 10) + " تومان"
+                tv_discount_amount.text =
+                    PriceUtil.getThousandSeparator().format(response.bonus_price / 10) + " تومان"
                 btn_pay.setOnClickListener {
                     viewModel.getRequestPayment(prescriptionId!!).observe(viewLifecycleOwner,
-                        Observer {
-                            if(it?.body()?.status == 1) {
+                        {
+                            if (it?.body()?.status == 1) {
                                 val browserIntent =
-                                    Intent(Intent.ACTION_VIEW, Uri.parse("${Constants.SITE_URL}gateway/request/${it.body()!!.data.resnum}/app"))
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse("${Constants.SITE_URL}gateway/request/${it.body()!!.data.resnum}/app")
+                                    )
                                 startActivity(browserIntent)
                             }
                         })
                 }
-                if(!response.comments.isNullOrEmpty()){
+                if (!response.comments.isNullOrEmpty()) {
                     txt_comments.visibility = View.VISIBLE
                     txt_comments.text = "توضیحات مرکز : ${response.comments}"
-                }else{
+                } else {
                     txt_comments.visibility = View.GONE
                 }
             }

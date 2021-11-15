@@ -11,21 +11,27 @@ import kotlinx.coroutines.Dispatchers
 import retrofit2.Response
 import java.io.IOException
 
-class CheckOutViewModel(private val dataRepository: DataRepository , private val roomRepository: RoomRepository) : ViewModel() {
-    fun getCheckOutFactor(prescriptionId : String): LiveData<Response<CheckOutResponse>?> {
-        return liveData(Dispatchers.IO){
+class CheckOutViewModel(
+    private val dataRepository: DataRepository,
+    private val roomRepository: RoomRepository
+) : ViewModel() {
+
+
+    fun getCheckOutFactor(prescriptionId: String): LiveData<Response<CheckOutResponse>?> {
+        return liveData(Dispatchers.IO) {
             try {
                 emit(dataRepository.getCheckOut(prescriptionId))
-            }catch (e : IOException){
+            } catch (e: IOException) {
                 emit(null)
             }
         }
     }
+
     fun getRequestPayment(prescriptionId: String): LiveData<Response<PaymentResponse>?> {
         return liveData(Dispatchers.IO) {
             try {
                 emit(dataRepository.getRequestPayment(prescriptionId))
-            }catch (e : IOException){
+            } catch (e: IOException) {
                 emit(null)
             }
         }

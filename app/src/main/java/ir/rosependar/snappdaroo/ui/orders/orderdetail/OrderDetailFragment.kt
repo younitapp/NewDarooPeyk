@@ -6,6 +6,7 @@ import android.media.Image
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,8 @@ import org.koin.core.parameter.parametersOf
 import saman.zamani.persiandate.PersianDate
 import java.text.SimpleDateFormat
 
+private const val TAG = "OrderDetailFragment"
+
 class OrderDetailFragment : Fragment() {
 
     companion object {
@@ -59,6 +62,8 @@ class OrderDetailFragment : Fragment() {
         btn_back.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        Log.e(TAG, "myOrderId: $orderId")
 
         try {
             viewModel.orderData.observe(viewLifecycleOwner, { response ->

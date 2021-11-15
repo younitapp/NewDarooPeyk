@@ -253,6 +253,7 @@ data class CheckOut(
     val invoice_code: Long,
     val order_price: Long,
     val shipping_price: Long,
+    val bonus_price: Long,
     val total_price: Long,
     val comments: String?
 )
