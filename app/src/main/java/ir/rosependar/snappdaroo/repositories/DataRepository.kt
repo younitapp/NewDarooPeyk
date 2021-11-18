@@ -13,7 +13,7 @@ class DataRepository(private val apiInterface: ApiInterface) {
     suspend fun sendBonusCode(bonus: String): Response<BaseResponse> {
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("bonus", bonus)
+            .addFormDataPart("bonus_code", bonus)
             .build()
         return apiInterface.sendBonusCode(requestBody = requestBody)
     }

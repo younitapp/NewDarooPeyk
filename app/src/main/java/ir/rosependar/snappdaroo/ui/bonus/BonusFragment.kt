@@ -45,13 +45,17 @@ class BonusFragment : DialogFragment() {
                         else {
                             Toast.makeText(requireContext(), "لطفا صبر کنید...", Toast.LENGTH_SHORT)
                                 .show()
-                            viewModel.bonusResponse.observe(viewLifecycleOwner, {
+                            viewModel.bonusResponse(bonusCode).observe(viewLifecycleOwner, {
                                 if (it?.body() != null && it.isSuccessful) {
                                     it.body()?.apply {
-                                        if (status == 1) {
-                                            successToast("کد تخفیف شما با موفقیت ثبت شد")
-                                            dismiss()
-                                        } else errorToast("کد تخفیف معتبر نیست")
+                                        when (status) {
+                                            1 -> {
+                                                successToast("کد تخفیف با موفقیت ثبت شد")
+                                                dismiss()
+                                            }
+                                            -2 -> errorToast("کد تخفیف قبلا ثبت شده است")
+                                            else -> errorToast("کد تخفیف نا معتبر است")
+                                        }
                                     }
                                     Log.e(TAG, "myStatus: ${it.body()!!.status} ")
                                     Log.e(TAG, "myMsg: ${it.body()!!.message} ")

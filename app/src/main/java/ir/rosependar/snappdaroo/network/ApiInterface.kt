@@ -10,8 +10,8 @@ interface ApiInterface {
 
     @POST("rpsapi_set_bonus")
     suspend fun sendBonusCode(
-        @Header("device_id") device_id: String = Prefs.getInstance()!!.getDeviceId(),
-        @Header("api_token") api_token: String = Prefs.getInstance()!!.getToken(),
+        @Header("deviceid") device_id: String = Prefs.getInstance()!!.getDeviceId(),
+        @Header("apitoken") api_token: String = Prefs.getInstance()!!.getToken(),
         @Body requestBody: RequestBody
     ): Response<BaseResponse>
 
